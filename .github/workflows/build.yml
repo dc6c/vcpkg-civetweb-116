@@ -18,7 +18,7 @@ jobs:
 
 
     - name: Configure CMake
-      run: cmake --preset ${{ steps.context.outputs.preset }}
+      run: cmake --preset ${{ matrix.preset }}
 
     - name: Build
-      run: cmake --build --preset ${{ steps.context.outputs.preset }}
+      run: cmake --build --preset ${{ matrix.preset }}
