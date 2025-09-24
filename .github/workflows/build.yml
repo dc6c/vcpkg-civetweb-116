@@ -12,8 +12,13 @@ jobs:
       with:
           submodules: recursive
 
+   strategy:
+      fail-fast: false
+      matrix:
+        preset: [default, clang]
+
     - name: Configure CMake
-      run: cmake --preset default
+      run: cmake --preset ${{ steps.context.outputs.preset }}
 
     - name: Build
-      run: cmake --build --preset default
+      run: cmake --build --preset ${{ steps.context.outputs.preset }}
