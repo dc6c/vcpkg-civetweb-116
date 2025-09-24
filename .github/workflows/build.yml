@@ -1,19 +1,27 @@
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
 name: Build on Ubuntu
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches: [ $default-branch ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [default, clang, clang-debug]
 
     steps:
     - uses: actions/checkout@v4
       with:
           submodules: recursive
 
+
     - name: Configure CMake
-      run: cmake --preset default
+      run: cmake --preset ${{ matrix.preset }}
 
     - name: Build
-      run: cmake --build --preset default
+      run: cmake --build --preset ${{ matrix.preset }}
