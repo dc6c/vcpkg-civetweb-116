@@ -6,16 +6,16 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [default, clang]
 
     steps:
     - uses: actions/checkout@v4
       with:
           submodules: recursive
 
-   strategy:
-      fail-fast: false
-      matrix:
-        preset: [default, clang]
 
     - name: Configure CMake
       run: cmake --preset ${{ steps.context.outputs.preset }}
